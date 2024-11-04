@@ -20,6 +20,7 @@ return new class extends Migration
             $table->json('attributes'); // JSON для хранения характеристик
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->foreignId('seller_id')->constrained('users');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

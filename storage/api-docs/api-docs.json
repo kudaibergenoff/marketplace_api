@@ -1,0 +1,364 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Marketplace API",
+        "description": "Marketplace API",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/v1/register": {
+            "post": {
+                "tags": [
+                    "Авторизация"
+                ],
+                "summary": "Регистрация",
+                "operationId": "ad77fe138bcb384ad65d167d5c8d1cc0",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Имя пользователя",
+                                        "type": "string",
+                                        "example": "Zhanuzak Kudaibergenov"
+                                    },
+                                    "email": {
+                                        "description": "Email пользователя",
+                                        "type": "string",
+                                        "example": "admin@marketplace.com"
+                                    },
+                                    "phone": {
+                                        "description": "Телефон пользователя",
+                                        "type": "string",
+                                        "example": "77071234567"
+                                    },
+                                    "password": {
+                                        "description": "Пароль пользователя",
+                                        "type": "string",
+                                        "example": "password123"
+                                    },
+                                    "password_confirmation": {
+                                        "description": "Подтверждение пароля",
+                                        "type": "string",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Успешно",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Пользователь успешно зарегистрирован"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Ошибка проверки"
+                    }
+                }
+            }
+        },
+        "/api/v1/login": {
+            "post": {
+                "tags": [
+                    "Авторизация"
+                ],
+                "summary": "Логин",
+                "operationId": "bae68d1c55329ecb6e41f48285840c8f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "description": "Email",
+                                        "type": "string",
+                                        "example": "admin@marketplace.com"
+                                    },
+                                    "password": {
+                                        "description": "Password",
+                                        "type": "string",
+                                        "example": "Aa123123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешно"
+                    },
+                    "404": {
+                        "description": "Пользовтель не найден"
+                    },
+                    "401": {
+                        "description": "Не авторизован"
+                    },
+                    "422": {
+                        "description": "Ошибка проверки"
+                    }
+                }
+            }
+        },
+        "/api/v1/logout": {
+            "post": {
+                "tags": [
+                    "Авторизация"
+                ],
+                "summary": "Выход",
+                "operationId": "c5cdd87fdbf9d0f95dede875bd023dec",
+                "responses": {
+                    "200": {
+                        "description": "Успешно"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/sellers/get": {
+            "get": {
+                "tags": [
+                    "Продавцы"
+                ],
+                "summary": "Получить список продавцов",
+                "operationId": "7b268ca9fc30827540481bbf0c316d2d",
+                "responses": {
+                    "200": {
+                        "description": "Список продавцов",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Seller"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/sellers/create": {
+            "post": {
+                "tags": [
+                    "Продавцы"
+                ],
+                "summary": "Добавить продавцов",
+                "operationId": "50b72aa27952de3cb805fa192954560a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Имя продавца",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "Email продавца",
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "phone": {
+                                        "description": "Телефон продавца в формате 77001234567",
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "description": "Пароль продавца",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Успешно"
+                    },
+                    "422": {
+                        "description": "Ошибка проверки"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/sellers/{id}/update": {
+            "put": {
+                "tags": [
+                    "Продавцы"
+                ],
+                "summary": "Обновить данные продавца",
+                "operationId": "b1bfc0e45226a12d00bc3d0166c9166c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID продавца",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Имя продавца",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "Email продавца",
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "phone": {
+                                        "description": "Телефон продавца",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешно обновлено"
+                    },
+                    "404": {
+                        "description": "Продавец не найден"
+                    },
+                    "422": {
+                        "description": "Ошибка проверки"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/sellers/{id}/delete": {
+            "delete": {
+                "tags": [
+                    "Продавцы"
+                ],
+                "summary": "Удалить продавца",
+                "operationId": "dc47ca709386e874889188a58d06f145",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID продавца",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Продавец успешно удален"
+                    },
+                    "404": {
+                        "description": "Продавец не найден"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Seller": {
+                "title": "Seller",
+                "description": "Схема продавца",
+                "properties": {
+                    "id": {
+                        "description": "ID продавца",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Имя продавца",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Email продавца",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "phone": {
+                        "description": "Телефон продавца в формате 77001234567",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "bearer": {
+                "type": "http",
+                "in": "header",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Авторизация",
+            "description": "Авторизация"
+        },
+        {
+            "name": "Продавцы",
+            "description": "Продавцы"
+        }
+    ]
+}

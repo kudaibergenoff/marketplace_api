@@ -10,7 +10,7 @@ class Role extends Model
     protected $table = 'roles';
 
     protected $fillable = [
-        'name', 'display_name', 'description',
+        'name', 'display_name',
     ];
 
     public function users(): BelongsToMany
@@ -18,8 +18,8 @@ class Role extends Model
         return $this->belongsToMany(User::class, 'role_user', 'role_id', 'user_id');
     }
 
-    public function permissions()
+    public function permissions(): BelongsToMany
     {
-        //
+        return $this->belongsToMany(Permission::class, 'permission_role', 'role_id', 'permission_id');
     }
 }
