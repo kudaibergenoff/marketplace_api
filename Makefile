@@ -55,5 +55,13 @@ app_install:
 	${DOCKER_COMPOSE} exec -u www-data api cp .env.example .env
 	${DOCKER_COMPOSE} exec -u www-data api composer install
 	${DOCKER_COMPOSE} exec -u www-data api php artisan migrate
+	make app_db_seed
 	${DOCKER_COMPOSE} exec -u www-data api php artisan vendor:publish --provider "L5Swagger\L5SwaggerServiceProvider"
 	make app_doc_generate
+
+app_db_seed:
+	echo "Excuting 'seeder'"
+	${DOCKER_COMPOSE} exec -u www-data api php artisan db:seed --class=RoleSeeder
+	${DOCKER_COMPOSE} exec -u www-data api php artisan db:seed --class=UserSeeder
+	${DOCKER_COMPOSE} exec -u www-data api php artisan db:seed --class=CategorySeeder
+	${DOCKER_COMPOSE} exec -u www-data api php artisan db:seed --class=ProductSeeder

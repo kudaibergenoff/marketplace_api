@@ -13,18 +13,6 @@ class SellersSeeder extends Seeder
      */
     public function run(): void
     {
-        Seller::create([
-            'user_id' => 3,
-            'contact_person' => 'Иван Иванов',
-            'company_name' => 'Ивановская компания',
-            'website' => 'http://ivanovskaya-kompaniya.com',
-        ]);
-
-        Seller::create([
-            'user_id' => 4,
-            'contact_person' => 'Петр Петров',
-            'company_name' => 'Петровская компания',
-            'website' => 'http://petrovskaya-kompaniya.com',
-        ]);
+        //
     }
 }

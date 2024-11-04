@@ -39,7 +39,7 @@ class ProductController extends BaseController
     /**
      * @OA\Get(
      *     path="/api/v1/products/get",
-     *     tags={"Товары"},
+     *     tags={"Продукты"},
      *     summary="Получить список товаров",
      *     security={ {"bearer": {}} },
      *     @OA\Response(
@@ -62,8 +62,8 @@ class ProductController extends BaseController
     /**
      * @OA\Post(
      *     path="/api/v1/products/create",
-     *     tags={"Товары"},
-     *     summary="Добавить товар",
+     *     tags={"Продукты"},
+     *     summary="Добавить продукт",
      *     security={ {"bearer": {}} },
      *     @OA\RequestBody(
      *         required=true,
@@ -108,14 +108,14 @@ class ProductController extends BaseController
     /**
      * @OA\Put(
      *     path="/api/v1/products/{id}/update",
-     *     tags={"Товары"},
-     *     summary="Обновить товар",
+     *     tags={"Продукты"},
+     *     summary="Обновить продукт",
      *     security={ {"bearer": {}} },
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
-     *         description="ID товара",
+     *         description="ID продукт",
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\RequestBody(
@@ -138,7 +138,7 @@ class ProductController extends BaseController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Товар успешно обновлен",
+     *         description="Продукт успешно обновлен",
      *         @OA\JsonContent(ref="#/components/schemas/Product")
      *     )
      * )
@@ -162,23 +162,23 @@ class ProductController extends BaseController
     /**
      * @OA\Delete(
      *     path="/api/v1/products/{id}/delete",
-     *     tags={"Товары"},
-     *     summary="Удалить товар",
+     *     tags={"Продукты"},
+     *     summary="Удалить продукт",
      *     security={ {"bearer": {}} },
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
-     *         description="ID товара",
+     *         description="ID продукт",
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Товар успешно удален",
+     *         description="Продукт успешно удален",
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="Товар не найден"
+     *         description="Продукт не найден"
      *     )
      * )
      */
@@ -186,5 +186,103 @@ class ProductController extends BaseController
     {
         $this->productService->deleteProduct($id);
         return $this->successResponse([], Response::HTTP_OK, 'Товар успешно удален');
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/v1/products/get-for-moderation",
+     *     tags={"Продукты"},
+     *     summary="Получить продукты для модерации",
+     *     security={ {"bearer": {}} },
+     *     @OA\Response(
+     *         response=200,
+     *         description="Продукты для модерации получены",
+     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Product"))
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Неавторизован",
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Нет доступа",
+     *     )
+    )
+     */
+    public function getProductsForModeration(): JsonResponse
+    {
+        $products = $this->productService->getProductsForModeration();
+
+        return $this->successResponse($products, Response::HTTP_OK, 'Товары для модерации получены');
+    }
+
+    /**
+     * @OA\Put(
+     *     path="/api/v1/products/{id}/approve",
+     *     tags={"Продукты"},
+     *     summary="Одобрить продукт",
+     *     security={ {"bearer": {}} },
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID продукт",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Продукт успешно одобрен",
+     *         @OA\JsonContent(ref="#/components/schemas/Product")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Продукт не найден",
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Нет доступа",
+     *     )
+    )
+     */
+    public function approveProduct(int $id): JsonResponse
+    {
+        $product = $this->productService->approveProduct($id);
+
+        return $this->successResponse($product, Response::HTTP_OK, 'Товар успешно одобрен');
+    }
+
+    /**
+     * @OA\Put(
+     *     path="/api/v1/products/{id}/reject",
+     *     tags={"Продукты"},
+     *     summary="Отклонить товар",
+     *     security={ {"bearer": {}} },
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID продукт",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Продукт успешно отклонен",
+     *         @OA\JsonContent(ref="#/components/schemas/Product")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Продукт не найден",
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Нет доступа",
+     *     )
+    )
+     */
+    public function rejectProduct(int $id): JsonResponse
+    {
+        $product = $this->productService->rejectProduct($id);
+
+        return $this->successResponse($product, Response::HTTP_OK, 'Товар успешно отклонен');
     }
 }

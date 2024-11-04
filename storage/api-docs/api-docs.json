@@ -266,7 +266,7 @@
         "/api/v1/products/get": {
             "get": {
                 "tags": [
-                    "Товары"
+                    "Продукты"
                 ],
                 "summary": "Получить список товаров",
                 "operationId": "c77443495be0269765548567530ea593",
@@ -295,9 +295,9 @@
         "/api/v1/products/create": {
             "post": {
                 "tags": [
-                    "Товары"
+                    "Продукты"
                 ],
-                "summary": "Добавить товар",
+                "summary": "Добавить продукт",
                 "operationId": "0c967f54238140a6fdca5a3aff16e248",
                 "requestBody": {
                     "required": true,
@@ -368,15 +368,15 @@
         "/api/v1/products/{id}/update": {
             "put": {
                 "tags": [
-                    "Товары"
+                    "Продукты"
                 ],
-                "summary": "Обновить товар",
+                "summary": "Обновить продукт",
                 "operationId": "ee18e0fc38138ed924908f0e72b09f96",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID товара",
+                        "description": "ID продукт",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -432,7 +432,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Товар успешно обновлен",
+                        "description": "Продукт успешно обновлен",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -452,15 +452,15 @@
         "/api/v1/products/{id}/delete": {
             "delete": {
                 "tags": [
-                    "Товары"
+                    "Продукты"
                 ],
-                "summary": "Удалить товар",
+                "summary": "Удалить продукт",
                 "operationId": "318bd5ae4047378366e8e94c83a1a28a",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID товара",
+                        "description": "ID продукт",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -469,10 +469,131 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Товар успешно удален"
+                        "description": "Продукт успешно удален"
                     },
                     "404": {
-                        "description": "Товар не найден"
+                        "description": "Продукт не найден"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/products/get-for-moderation": {
+            "get": {
+                "tags": [
+                    "Продукты"
+                ],
+                "summary": "Получить продукты для модерации",
+                "operationId": "2581a87681c6255735038e29e86959d0",
+                "responses": {
+                    "200": {
+                        "description": "Продукты для модерации получены",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Product"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неавторизован"
+                    },
+                    "403": {
+                        "description": "Нет доступа"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/products/{id}/approve": {
+            "put": {
+                "tags": [
+                    "Продукты"
+                ],
+                "summary": "Одобрить продукт",
+                "operationId": "d7bffca5f75c67022fd8507390eaccaf",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID продукт",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Продукт успешно одобрен",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Продукт не найден"
+                    },
+                    "403": {
+                        "description": "Нет доступа"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/products/{id}/reject": {
+            "put": {
+                "tags": [
+                    "Продукты"
+                ],
+                "summary": "Отклонить товар",
+                "operationId": "0e9a44de5bf99831b9b76ade22e7fc4d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID продукт",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Продукт успешно отклонен",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Продукт не найден"
+                    },
+                    "403": {
+                        "description": "Нет доступа"
                     }
                 },
                 "security": [
@@ -780,8 +901,8 @@
             "description": "Категории"
         },
         {
-            "name": "Товары",
-            "description": "Товары"
+            "name": "Продукты",
+            "description": "Продукты"
         },
         {
             "name": "Продавцы",

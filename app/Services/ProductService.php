@@ -51,5 +51,22 @@ class ProductService
         );
     }
 
+    public function getProductsForModeration()
+    {
+        return $products = $this->productRepository->all()->where('status', 'pending');
+    }
+
+    public function approveProduct($id)
+    {
+        $product = $this->productRepository->find($id);
+        return $this->productRepository->update($product->id, ['status' => 'approved']);
+    }
+
+    public function rejectProduct($id)
+    {
+        $product = $this->productRepository->find($id);
+        return $this->productRepository->update($product->id, ['status' => 'rejected']);
+    }
+
 
 }
