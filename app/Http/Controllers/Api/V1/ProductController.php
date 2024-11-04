@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Notifications\ProductModerationNotification;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -248,6 +249,8 @@ class ProductController extends BaseController
     {
         $product = $this->productService->approveProduct($id);
 
+        //$product->seller->notify(new ProductModerationNotification($product, 'одобрен'));
+
         return $this->successResponse($product, Response::HTTP_OK, 'Товар успешно одобрен');
     }
 
@@ -282,6 +285,8 @@ class ProductController extends BaseController
     public function rejectProduct(int $id): JsonResponse
     {
         $product = $this->productService->rejectProduct($id);
+
+        //$product->seller->notify(new ProductModerationNotification($product, 'отказан'));
 
         return $this->successResponse($product, Response::HTTP_OK, 'Товар успешно отклонен');
     }
