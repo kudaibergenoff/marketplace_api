@@ -15,9 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->decimal('price', 8, 2);
-            $table->unsignedBigInteger('category_id');
-            $table->json('attributes'); // JSON для хранения характеристик
+            $table->decimal('price', 10, 2);
+            $table->foreignId('category_id')->constrained('categories');
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->foreignId('seller_id')->constrained('users');
             $table->softDeletes();

@@ -15,77 +15,77 @@ class AuthController extends BaseController
 {
     public function __construct(protected AuthService $authService){}
 
-    /**
-     * @OA\Post (
-     *     path="/api/v1/register",
-     *     summary="Регистрация",
-     *     tags={"Авторизация"},
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\MediaType(
-     *             mediaType="application/json",
-     *             @OA\Schema(
-     *                 @OA\Property(
-     *                     property="name",
-     *                     description="Имя пользователя",
-     *                     type="string",
-     *                     example="Zhanuzak Kudaibergenov",
-     *                 ),
-     *                 @OA\Property(
-     *                     property="email",
-     *                     description="Email пользователя",
-     *                     type="string",
-     *                     example="admin@marketplace.com",
-     *                 ),
-     *                 @OA\Property(
-     *                     property="phone",
-     *                     description="Телефон пользователя",
-     *                     type="string",
-     *                     example="77071234567",
-     *                 ),
-     *                 @OA\Property(
-     *                     property="password",
-     *                     description="Пароль пользователя",
-     *                     type="string",
-     *                     example="password123",
-     *                 ),
-     *                 @OA\Property(
-     *                     property="password_confirmation",
-     *                     description="Подтверждение пароля",
-     *                     type="string",
-     *                     example="password123",
-     *                 )
-     *             )
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=201,
-     *         description="Успешно",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="success", type="boolean", example=true),
-     *             @OA\Property(property="message", type="string", example="Пользователь успешно зарегистрирован"),
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=422,
-     *         description="Ошибка проверки"
-     *     )
-     * )
-     *
-     * @param RegisterRequest $request
-     * @return JsonResponse
-     */
-    public function register(RegisterRequest $request): JsonResponse
-    {
-        $user = $this->authService->register($request->validated());
-
-        return $this->successResponse(
-            $user,
-            Response::HTTP_CREATED,
-            'Пользователь успешно зарегистрирован'
-        );
-    }
+//    /**
+//     * @OA\Post (
+//     *     path="/api/v1/register",
+//     *     summary="Регистрация",
+//     *     tags={"Авторизация"},
+//     *     @OA\RequestBody(
+//     *         required=true,
+//     *         @OA\MediaType(
+//     *             mediaType="application/json",
+//     *             @OA\Schema(
+//     *                 @OA\Property(
+//     *                     property="name",
+//     *                     description="Имя пользователя",
+//     *                     type="string",
+//     *                     example="Zhanuzak Kudaibergenov",
+//     *                 ),
+//     *                 @OA\Property(
+//     *                     property="email",
+//     *                     description="Email пользователя",
+//     *                     type="string",
+//     *                     example="admin@marketplace.com",
+//     *                 ),
+//     *                 @OA\Property(
+//     *                     property="phone",
+//     *                     description="Телефон пользователя",
+//     *                     type="string",
+//     *                     example="77071234567",
+//     *                 ),
+//     *                 @OA\Property(
+//     *                     property="password",
+//     *                     description="Пароль пользователя",
+//     *                     type="string",
+//     *                     example="password123",
+//     *                 ),
+//     *                 @OA\Property(
+//     *                     property="password_confirmation",
+//     *                     description="Подтверждение пароля",
+//     *                     type="string",
+//     *                     example="password123",
+//     *                 )
+//     *             )
+//     *         )
+//     *     ),
+//     *     @OA\Response(
+//     *         response=201,
+//     *         description="Успешно",
+//     *         @OA\JsonContent(
+//     *             type="object",
+//     *             @OA\Property(property="success", type="boolean", example=true),
+//     *             @OA\Property(property="message", type="string", example="Пользователь успешно зарегистрирован"),
+//     *         )
+//     *     ),
+//     *     @OA\Response(
+//     *         response=422,
+//     *         description="Ошибка проверки"
+//     *     )
+//     * )
+//     *
+//     * @param RegisterRequest $request
+//     * @return JsonResponse
+//     */
+//    public function register(RegisterRequest $request): JsonResponse
+//    {
+//        $user = $this->authService->register($request->validated());
+//
+//        return $this->successResponse(
+//            $user,
+//            Response::HTTP_CREATED,
+//            'Пользователь успешно зарегистрирован'
+//        );
+//    }
 
     /**
      * @OA\Post (

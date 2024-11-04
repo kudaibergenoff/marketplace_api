@@ -6,77 +6,6 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/api/v1/register": {
-            "post": {
-                "tags": [
-                    "Авторизация"
-                ],
-                "summary": "Регистрация",
-                "operationId": "ad77fe138bcb384ad65d167d5c8d1cc0",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "name": {
-                                        "description": "Имя пользователя",
-                                        "type": "string",
-                                        "example": "Zhanuzak Kudaibergenov"
-                                    },
-                                    "email": {
-                                        "description": "Email пользователя",
-                                        "type": "string",
-                                        "example": "admin@marketplace.com"
-                                    },
-                                    "phone": {
-                                        "description": "Телефон пользователя",
-                                        "type": "string",
-                                        "example": "77071234567"
-                                    },
-                                    "password": {
-                                        "description": "Пароль пользователя",
-                                        "type": "string",
-                                        "example": "password123"
-                                    },
-                                    "password_confirmation": {
-                                        "description": "Подтверждение пароля",
-                                        "type": "string",
-                                        "example": "password123"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Успешно",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Пользователь успешно зарегистрирован"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Ошибка проверки"
-                    }
-                }
-            }
-        },
         "/api/v1/login": {
             "post": {
                 "tags": [
@@ -132,6 +61,418 @@
                 "responses": {
                     "200": {
                         "description": "Успешно"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/categories/get": {
+            "get": {
+                "tags": [
+                    "Категории"
+                ],
+                "summary": "Получить список категорий",
+                "operationId": "d79e90761b64470a9b423f358ffc749b",
+                "responses": {
+                    "200": {
+                        "description": "Список категорий",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Category"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/categories/create": {
+            "post": {
+                "tags": [
+                    "Категории"
+                ],
+                "summary": "Добавить категорию",
+                "operationId": "12074baf8dd0ef9699be5823f68a388d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "parent_id": {
+                                        "description": "ID родительской категории",
+                                        "type": "integer",
+                                        "nullable": true
+                                    },
+                                    "name": {
+                                        "description": "Название категории",
+                                        "type": "string"
+                                    },
+                                    "slug": {
+                                        "description": "Уникальный идентификатор категории",
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "description": "Описание категории",
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "status": {
+                                        "description": "Статус категории",
+                                        "type": "boolean"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Категория успешно добавлена",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Category"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/categories/{id}/update": {
+            "put": {
+                "tags": [
+                    "Категории"
+                ],
+                "summary": "Обновить категорию",
+                "operationId": "dd78c127bcc3e22c68ce3d21b5dafbd1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID категории",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "parent_id": {
+                                        "description": "ID родительской категории",
+                                        "type": "integer",
+                                        "nullable": true
+                                    },
+                                    "name": {
+                                        "description": "Название категории",
+                                        "type": "string"
+                                    },
+                                    "slug": {
+                                        "description": "Уникальный идентификатор категории",
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "description": "Описание категории",
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "status": {
+                                        "description": "Статус категории",
+                                        "type": "boolean"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Категория успешно обновлена",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Category"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/categories/{id}/delete": {
+            "delete": {
+                "tags": [
+                    "Категории"
+                ],
+                "summary": "Удалить категорию",
+                "operationId": "f8a389e712a4f1eec38e26a97aa1fef9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID категории",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Категория успешно удалена"
+                    },
+                    "404": {
+                        "description": "Категория не найдена"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/products/get": {
+            "get": {
+                "tags": [
+                    "Товары"
+                ],
+                "summary": "Получить список товаров",
+                "operationId": "c77443495be0269765548567530ea593",
+                "responses": {
+                    "200": {
+                        "description": "Список товаров",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Product"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/products/create": {
+            "post": {
+                "tags": [
+                    "Товары"
+                ],
+                "summary": "Добавить товар",
+                "operationId": "0c967f54238140a6fdca5a3aff16e248",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Название продукта",
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "description": "Описание продукта",
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "price": {
+                                        "description": "Цена продукта",
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "category_id": {
+                                        "description": "Категория",
+                                        "type": "string"
+                                    },
+                                    "attributes": {
+                                        "description": "Атрибуты продукта",
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "attribute_name": {
+                                                    "description": "Название атрибута",
+                                                    "type": "string"
+                                                },
+                                                "attribute_value": {
+                                                    "description": "Значение атрибута",
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Продукт успешно добавлен",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/products/{id}/update": {
+            "put": {
+                "tags": [
+                    "Товары"
+                ],
+                "summary": "Обновить товар",
+                "operationId": "ee18e0fc38138ed924908f0e72b09f96",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID товара",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Название товара",
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "description": "Описание товара",
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "price": {
+                                        "description": "Цена товара",
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "attributes": {
+                                        "description": "Атрибуты товара",
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "id": {
+                                                    "description": "ID атрибута",
+                                                    "type": "integer"
+                                                },
+                                                "name": {
+                                                    "description": "Название атрибута",
+                                                    "type": "string"
+                                                },
+                                                "value": {
+                                                    "description": "Значение атрибута",
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Товар успешно обновлен",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/products/{id}/delete": {
+            "delete": {
+                "tags": [
+                    "Товары"
+                ],
+                "summary": "Удалить товар",
+                "operationId": "318bd5ae4047378366e8e94c83a1a28a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID товара",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Товар успешно удален"
+                    },
+                    "404": {
+                        "description": "Товар не найден"
                     }
                 },
                 "security": [
@@ -318,6 +659,84 @@
     },
     "components": {
         "schemas": {
+            "Category": {
+                "title": "Category",
+                "description": "Схема категории",
+                "properties": {
+                    "id": {
+                        "description": "ID категории",
+                        "type": "integer"
+                    },
+                    "parent_id": {
+                        "description": "ID родительской категории",
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "name": {
+                        "description": "Название категории",
+                        "type": "string"
+                    },
+                    "slug": {
+                        "description": "Уникальный идентификатор категории",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Описание категории",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "status": {
+                        "description": "Статус категории (активна или нет)",
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "Product": {
+                "title": "Product",
+                "description": "Схема товара",
+                "properties": {
+                    "id": {
+                        "description": "ID товара",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Название товара",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Описание товара",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "price": {
+                        "description": "Цена товара",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "attributes": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "id": {
+                                    "description": "ID атрибута",
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "description": "Название атрибута",
+                                    "type": "string"
+                                },
+                                "value": {
+                                    "description": "Значение атрибута",
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                },
+                "type": "object"
+            },
             "Seller": {
                 "title": "Seller",
                 "description": "Схема продавца",
@@ -355,6 +774,14 @@
         {
             "name": "Авторизация",
             "description": "Авторизация"
+        },
+        {
+            "name": "Категории",
+            "description": "Категории"
+        },
+        {
+            "name": "Товары",
+            "description": "Товары"
         },
         {
             "name": "Продавцы",

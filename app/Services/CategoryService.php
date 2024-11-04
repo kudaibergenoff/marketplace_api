@@ -24,7 +24,7 @@ class CategoryService
     }
     public function update(array $data, int $id)
     {
-        return $this->categoryRepository->update($data, $id);
+        return $this->categoryRepository->update($id, $data);
     }
 
     public function delete(int $id)

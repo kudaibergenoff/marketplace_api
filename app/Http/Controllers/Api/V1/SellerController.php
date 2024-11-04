@@ -12,37 +12,37 @@ use Illuminate\Http\Request;
 use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @OA\Schema(
+ *     schema="Seller",
+ *     type="object",
+ *     title="Seller",
+ *     description="Схема продавца",
+ *     @OA\Property(
+ *         property="id",
+ *         type="integer",
+ *         description="ID продавца"
+ *     ),
+ *     @OA\Property(
+ *         property="name",
+ *         type="string",
+ *         description="Имя продавца"
+ *     ),
+ *     @OA\Property(
+ *         property="email",
+ *         type="string",
+ *         format="email",
+ *         description="Email продавца"
+ *     ),
+ *     @OA\Property(
+ *         property="phone",
+ *         type="string",
+ *         description="Телефон продавца в формате 77001234567"
+ *     )
+ * )
+ */
 class SellerController extends BaseController
 {
-    /**
-     * @OA\Schema(
-     *     schema="Seller",
-     *     type="object",
-     *     title="Seller",
-     *     description="Схема продавца",
-     *     @OA\Property(
-     *         property="id",
-     *         type="integer",
-     *         description="ID продавца"
-     *     ),
-     *     @OA\Property(
-     *         property="name",
-     *         type="string",
-     *         description="Имя продавца"
-     *     ),
-     *     @OA\Property(
-     *         property="email",
-     *         type="string",
-     *         format="email",
-     *         description="Email продавца"
-     *     ),
-     *     @OA\Property(
-     *         property="phone",
-     *         type="string",
-     *         description="Телефон продавца в формате 77001234567"
-     *     )
-     * )
-     */
     public function __construct(private SellerService $sellerService) {}
 
     /**
